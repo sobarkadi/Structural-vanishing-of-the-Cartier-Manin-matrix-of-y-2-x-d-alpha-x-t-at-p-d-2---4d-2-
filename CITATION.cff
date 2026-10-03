@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+  - family-names: "Mohamed"
+    given-names: "Sofiene"
+    email: "etudiant.mohamed.sofiene@uvt.tn"
+    affiliation: "Chercheur indépendant, Tunis, Tunisie"
+title: "Script de vérification numérique : Annulation structurelle de la matrice de Cartier–Manin de y² = xᵈ + αx + t"
+version: 1.0.0
+date-released: 2026-10-03
+keywords:
+  - "matrice de Cartier-Manin"
+  - "courbes hyperelliptiques"
+  - "ordinarité générique"
+  - "p-rang"
+  - "Zhu"
+  - "Python"

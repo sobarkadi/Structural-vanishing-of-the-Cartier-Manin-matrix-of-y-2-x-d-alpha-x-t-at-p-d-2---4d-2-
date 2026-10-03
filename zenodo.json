@@ -1,0 +1,19 @@
+{
+    "title": "Script de vérification numérique : Annulation structurelle de la matrice de Cartier–Manin de y² = xᵈ + αx + t",
+    "description": "Code Python de vérification numérique associé à l'article 'Annulation structurelle de la matrice de Cartier–Manin de y² = xᵈ + αx + t en p = d² − 4d + 2 : optimalité du seuil de Zhu'.",
+    "creators": [
+        {
+            "name": "Mohamed, Sofiene",
+            "affiliation": "Chercheur indépendant, Tunis, Tunisie"
+        }
+    ],
+    "upload_type": "software",
+    "keywords": [
+        "matrice de Cartier-Manin",
+        "courbes hyperelliptiques",
+        "ordinarité générique",
+        "p-rang",
+        "Zhu",
+        "Python"
+    ]
+}
