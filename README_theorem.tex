@@ -1,0 +1,213 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{geometry}
+\usepackage{hyperref}
+\geometry{margin=2.5cm}
+
+\title{README --- Théorème A et vérification computationnelle}
+\author{Mohamed Sofyen}
+\date{\today}
+
+\newtheorem{theorem}{Théorème}
+\newtheorem{corollary}{Corollaire}
+\newtheorem{proposition}{Proposition}
+
+\begin{document}
+\maketitle
+
+\section{Objet}
+
+Ce dépôt accompagne le travail sur les matrices de Cartier--Manin des
+familles hyperelliptiques
+\[
+ y^2=x^d+\sigma x^r+t
+\]
+en caractéristique première impaire $p$.
+
+Le résultat central présenté ici est une borne du rang obtenue à partir
+du support arithmétique des coefficients et d'un couplage maximum dans
+un graphe biparti.
+
+\section{Théorème A}
+
+On pose
+\[
+ n=\frac{p-1}{2},\qquad
+ g=\left\lfloor\frac{d-1}{2}\right\rfloor
+\]
+et
+\[
+ f(x)=x^d+\sigma x^r+t.
+\]
+La matrice $M=M_{p,d,r}(\sigma,t)$ est la matrice $g\times g$ dont
+l'entrée $(i,j)$ est le coefficient de $x^{ip-j}$ dans $f(x)^n$.
+
+Pour $1\leq i,j\leq g$, on définit
+\[
+ T(i,j)=
+ \left\{(\alpha,\beta,\gamma)\in\mathbb N^3:
+ \alpha+\beta+\gamma=n,\quad
+ d\alpha+r\beta=ip-j
+ \right\}.
+\]
+Le graphe biparti $G_{p,d,r}$ possède les lignes et les colonnes comme
+sommets et une arête $(i,j)$ lorsque $T(i,j)\neq\varnothing$.
+On note $\nu(G)$ la taille d'un couplage maximum.
+
+\begin{theorem}
+Pour tous $\sigma,t$ dans un corps de caractéristique $p$,
+\[
+ \operatorname{rang}M_{p,d,r}(\sigma,t)
+ \leq \nu(G_{p,d,r}).
+\]
+\end{theorem}
+
+\subsection*{Idée de la preuve}
+
+Le développement multinomial donne
+\[
+ M_{ij}
+ =
+ \sum_{(\alpha,\beta,\gamma)\in T(i,j)}
+ {n\choose\alpha,\beta,\gamma}
+ \sigma^\beta t^\gamma.
+\]
+Comme $n<p$, les coefficients multinomiaux sont non nuls modulo $p$.
+Ainsi l'entrée est identiquement nulle exactement lorsque $T(i,j)$
+est vide.
+
+Tout mineur de taille strictement supérieure à $\nu(G)$ est nul :
+un terme non nul de son développement de Leibniz fournirait un
+couplage de cette taille, contradiction.
+
+\section{Critère arithmétique des arêtes}
+
+L'existence d'une arête $(i,j)$ équivaut à l'existence de
+$\beta\in\{0,\ldots,n\}$ telle que
+\[
+ ip-j-r\beta\geq0,\qquad
+ d\mid(ip-j-r\beta),
+\]
+et, en posant
+\[
+ \alpha=\frac{ip-j-r\beta}{d},
+\]
+on ait
+\[
+ \alpha+\beta\leq n.
+\]
+En particulier,
+\[
+ \gcd(d,r)\mid ip-j
+\]
+est une condition nécessaire.
+
+Pour $d=p+1$, on retrouve la forme
+\[
+ ip-j=(i-1)d+(d-i-j),
+\]
+et donc la congruence
+\[
+ r\beta\equiv d-i-j\pmod d.
+\]
+
+\section{Conséquence de non-ordinarité}
+
+Si
+\[
+ \nu(G_{p,d,r})<g,
+\]
+alors
+\[
+ \det M=0
+\]
+pour tous $\sigma,t$. Lorsque $f$ est sans facteur carré, cela entraîne
+que la courbe hyperelliptique n'est pas ordinaire.
+
+Attention : la condition $\nu(G)=g$ ne suffit pas à elle seule à prouver
+l'ordinarité. De même, l'égalité
+$\operatorname{rang}M=\nu(G)$ n'est pas vraie en général.
+
+\section{Théorème B : une tranche arithmétique}
+
+Pour
+\[
+ p\equiv5\pmod6,\qquad d=p+1,\qquad
+ r=\frac{p+1}{3},
+\]
+le calcul combinatoire du graphe donne
+\[
+ \nu(G)=r=\frac{p+1}{3}
+\]
+et
+\[
+ g-\nu(G)=\frac{p-5}{6}.
+\]
+On obtient donc
+\[
+ \operatorname{rang}M\leq\frac{p+1}{3}
+\]
+et un défaut d'au moins
+\[
+ \frac{p-5}{6}
+\]
+par rapport au genre.
+
+Le programme fourni vérifie cette structure pour des nombres premiers
+choisis dans cette progression. Cette vérification numérique ne remplace
+pas la démonstration mathématique du théorème.
+
+\section{Ce que fait le programme}
+
+Le fichier \texttt{theoreme\_couplage\_verif.py} :
+
+\begin{enumerate}
+\item construit les arêtes à partir de la définition exacte de $T(i,j)$ ;
+\item calcule un couplage maximum par l'algorithme de Kuhn ;
+\item construit la matrice de Cartier--Manin modulo $p$ ;
+\item calcule son rang exact par élimination de Gauss sur $\mathbb F_p$ ;
+\item vérifie numériquement
+\[
+\operatorname{rang}M\leq\nu(G).
+\]
+\end{enumerate}
+
+Le code ne suppose jamais que le rang est égal au couplage maximum.
+
+\section{Reproductibilité}
+
+Avec Python 3 :
+\begin{verbatim}
+python3 theoreme_couplage_verif.py
+\end{verbatim}
+
+Aucune bibliothèque externe n'est nécessaire.
+
+\section{Statut scientifique}
+
+Le développement multinomial, la matrice de Cartier--Manin et le lien
+entre p-rang et matrice de Cartier--Manin constituent le cadre classique.
+Le travail présenté ici se concentre sur la construction arithmétique du
+graphe $G_{p,d,r}$ et sur la borne de rang obtenue par son couplage
+maximum.
+
+Les résultats numériques doivent être distingués des résultats démontrés.
+En particulier, les égalités de type
+\[
+\operatorname{rang}M=\nu(G)
+\]
+sont à traiter comme des observations ou des résultats à démontrer
+séparément lorsqu'elles ne sont pas accompagnées d'une preuve.
+
+\section{Références et positionnement}
+
+Le document de référence mentionne notamment Miller, Lubin, Novoselov
+et Zhu pour les cadres et familles proches. Ces travaux sont utilisés
+pour le positionnement, non comme substitution à la preuve du présent
+énoncé.
+
+\end{document}
